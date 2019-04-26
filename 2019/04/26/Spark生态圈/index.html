@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Varela Round:300,300italic,400,400italic,700,700italic|Varela Round:300,300italic,400,400italic,700,700italic|Varela Round:300,300italic,400,400italic,700,700italic|Damion:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="生态系统&amp;emsp;&amp;emsp;Spark生态圈也被称为BDAS（伯克利数据分析栈），力图在算法（Algorithms）、机器（Machines）、人（People）之间通过大规模集成来展现大数据应用的一个平台。该生态圈已经涉及到了机器学习、数据挖掘、数据库、信息检索、自然语言处理和语音识别等多个领域。 &amp;emsp;&amp;emsp;Spark生态圈以Spark Core为核心，从HDFS、Amazon">
+<meta name="keywords" content="Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark生态圈">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/Spark生态圈/index.html">
+<meta property="og:site_name" content="Ocean&#39;s blog">
+<meta property="og:description" content="生态系统&amp;emsp;&amp;emsp;Spark生态圈也被称为BDAS（伯克利数据分析栈），力图在算法（Algorithms）、机器（Machines）、人（People）之间通过大规模集成来展现大数据应用的一个平台。该生态圈已经涉及到了机器学习、数据挖掘、数据库、信息检索、自然语言处理和语音识别等多个领域。 &amp;emsp;&amp;emsp;Spark生态圈以Spark Core为核心，从HDFS、Amazon">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/04/26/5cc27919e6cde.jpg">
+<meta property="og:updated_time" content="2019-04-26T03:27:25.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spark生态圈">
+<meta name="twitter:description" content="生态系统&amp;emsp;&amp;emsp;Spark生态圈也被称为BDAS（伯克利数据分析栈），力图在算法（Algorithms）、机器（Machines）、人（People）之间通过大规模集成来展现大数据应用的一个平台。该生态圈已经涉及到了机器学习、数据挖掘、数据库、信息检索、自然语言处理和语音识别等多个领域。 &amp;emsp;&amp;emsp;Spark生态圈以Spark Core为核心，从HDFS、Amazon">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/26/5cc27919e6cde.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/26/Spark生态圈/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Spark生态圈 | Ocean's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ocean's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的目标是星辰大海</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Spark生态圈/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ocean">
+      <meta itemprop="description" content="大数据技术博客">
+      <meta itemprop="image" content="/images/love.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ocean's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spark生态圈
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 11:14:44 / 修改时间：11:27:25" itemprop="dateCreated datePublished" datetime="2019-04-26T11:14:44+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="生态系统"><a href="#生态系统" class="headerlink" title="生态系统"></a>生态系统</h2><p>&emsp;&emsp;<strong>Spark生态圈</strong>也被称为<strong>BDAS</strong>（伯克利数据分析栈），力图在<strong>算法</strong>（Algorithms）、<strong>机器</strong>（Machines）、<strong>人</strong>（People）之间通过大规模集成来展现大数据应用的一个平台。该生态圈已经涉及到了机器学习、数据挖掘、数据库、信息检索、自然语言处理和语音识别等多个领域。</p>
+<p>&emsp;&emsp;Spark生态圈以<strong>Spark Core</strong>为核心，从<strong>HDFS</strong>、<strong>Amazon S3</strong>和<strong>HBase</strong>等持久层读取数据，以<strong>YARN</strong>和<strong>Standalone</strong>等作为资源管理器调度Job完成Spark应用程序的计算。这些应用程序可以来自不同的组件，如<strong>Spark Shell/Spark Submit</strong>的批处理、<strong>Spark Streaming</strong>的实时处理、<strong>Spark SQL</strong>的即席查询、<strong>BlinkDB</strong>的权衡查询、<strong>MLlib/MLbase</strong>的机器学习、<strong>GraphX</strong>的图处理和<strong>SparkR</strong>的数学计算等等。<br><a id="more"></a><br><img src="https://i.loli.net/2019/04/26/5cc27919e6cde.jpg" alt></p>
+<h2 id="Spark-Core"><a href="#Spark-Core" class="headerlink" title="Spark Core"></a>Spark Core</h2><ol>
+<li>提供了<strong>有向无环图</strong>（DAG）的分布式并行计算框架，并提供<strong>Cache机制</strong>来支持多次迭代计算或者数据共享，大大减少迭代计算之间读取数据局的开销，这对于需要进行多次迭代的数据挖掘和分析性能有很大提升。</li>
+<li>在Spark中引入了<strong>RDD (Resilient Distributed Dataset)</strong> 的抽象，它是分布在一组节点中的只读对象集合，这些集合是弹性的，如果数据集一部分丢失，则可以根据“<strong>血统</strong>”对它们进行重建，保证了数据的高容错性。</li>
+<li><strong>移动计算而非移动数据</strong>，RDD Partition可以就近读取分布式文件系统中的数据块到各个节点内存中进行计算。</li>
+<li>使用<strong>多线程池模型</strong>来减少task启动开稍。</li>
+<li>采用容错的、高可伸缩性的<strong>akka</strong>作为通讯框架。</li>
+</ol>
+<h2 id="SparkStreaming"><a href="#SparkStreaming" class="headerlink" title="SparkStreaming"></a>SparkStreaming</h2><p>&emsp;&emsp;<strong>SparkStreaming</strong>是一个对实时数据流进行高通量、容错处理的<strong>流式处理系统</strong>，可以对多种数据源（如Kdfka、Flume、Twitter、Zero和TCP 套接字）进行各种复杂算子操作，并将结果保存到外部文件系统、数据库或应用到实时仪表盘。</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><h4 id="计算流程"><a href="#计算流程" class="headerlink" title="计算流程"></a>计算流程</h4><p>&emsp;&emsp;SparkStreaming会将计算分解成一系列短小的<strong>批处理作业</strong>。这里批处理的引擎是<strong>Spark Core</strong>，SparkStreaming的数据数据会按照<strong>batch size</strong>分成一段一段的数据，每一段数据都会转换成<strong>RDD</strong>，这样就将SparkStreaming中对DStream的Transformation操作变成了针对Spark中对RDD的Transformation操作，将RDD经过操作变成的中间结果保存到<strong>内存</strong>中。</p>
+<h4 id="容错性"><a href="#容错性" class="headerlink" title="容错性"></a>容错性</h4><p>&emsp;&emsp;对于一个流式计算来说，<strong>容错性</strong>是至关重要的。RDD是一个不可变的分布式可重算的数据集，它记录着操作继承关系（<strong>lineage</strong>），因此，任意一个RDD的分区出错，都可以利用原始数据重新计算。每一个RDD由多个<strong>partition</strong>组成，RDD之间通过lineage相连，多个RDD构成了<strong>血统</strong>，所以当数据是来源于<strong>HDFS</strong>（多备份）或<strong>网络的数据流</strong>（SparkStreaming会将网络输入数据的每一个数据流拷贝两份到其他机器）这种能保证容错性的数据源时，RDD的任意partition出错，都可以并行的在其他机器上将缺失的Partition计算出来。这个容错恢复方式比连续计算模型（Storm）的<strong>效率更高</strong>。</p>
+<h4 id="实时性"><a href="#实时性" class="headerlink" title="实时性"></a>实时性</h4><p>&emsp;&emsp;目前版本的Spark Streaming，其最小的<strong>Batch Size</strong>的选取在<strong>0.5~2秒</strong>之间（Storm最小延迟是100ms左右），它是一种<strong>准实时</strong>的流式处理框架。</p>
+<h4 id="扩展性与吞吐量"><a href="#扩展性与吞吐量" class="headerlink" title="扩展性与吞吐量"></a>扩展性与吞吐量</h4><p>&emsp;&emsp;Spark目前在EC2上已能够线性扩展到<strong>100</strong>个节点（每个节点4Core），可以以数秒的延迟处理<strong>6GB/s</strong>的数据量（60M records/s），其吞吐量也比流行的Storm高<strong>2～5</strong>倍。</p>
+<h2 id="Spark-SQL"><a href="#Spark-SQL" class="headerlink" title="Spark SQL"></a>Spark SQL</h2><h3 id="前世今生"><a href="#前世今生" class="headerlink" title="前世今生"></a>前世今生</h3><p>&emsp;&emsp;众所周知，Hive可以将SQL编译成可扩展的MapReduce作业，为了能将Hive和Spark整合，<strong>Shark</strong>应运而生。Shark就是<strong>Hive on Spark</strong>，本质上是通过Hive的HQL解析，把HQL翻译成Spark上的RDD操作，然后通过Hive的metadata获取数据库里的表信息，实际HDFS上的数据和文件，会由Shark获取并放到Spark上运算。Shark的最大特性就是<strong>快</strong>和<strong>与Hive的完全兼容</strong>，且可以在shell模式下使用<strong>rdd2sql()</strong>这样的API，把HQL得到的结果集，继续在scala环境下运算，支持自己编写简单的机器学习或简单分析处理函数，对HQL结果进一步分析计算。</p>
+<p>&emsp;&emsp;<strong>Shark</strong>就是<strong>Spark SQL</strong>的前身，Shark更多是对Hive的改造，替换了Hive的物理执行引擎，因此会有一个很快的速度。然而，不容忽视的是，Shark继承了大量的Hive代码，因此给优化和维护带来了大量的麻烦。随着性能优化和先进分析整合的进一步加深，基于MapReduce设计的部分无疑成为了整个项目的瓶颈。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>引入了新的RDD类型<strong>SchemaRDD</strong>，可以象传统数据库定义表一样来定义SchemaRDD，SchemaRDD由定义了列数据类型的行对象构成。SchemaRDD可以从RDD转换过来，也可以从Parquet文件读入，也可以使用HiveQL从Hive中获取。</li>
+<li>内嵌了<strong>Catalyst查询优化框架</strong>，在把SQL解析成逻辑执行计划之后，利用Catalyst包里的一些类和接口，执行了一些简单的执行计划优化，最后变成RDD的计算。</li>
+<li>在应用程序中可以混合使用<strong>不同来源的数据</strong>，如可以将来自HiveQL的数据和来自SQL的数据进行Join操作。</li>
+</ol>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><ol>
+<li><strong>内存列存储（In-Memory Columnar Storage）</strong> sparkSQL的表数据在内存中存储不是采用原生态的JVM对象存储方式，而是采用内存列存储；</li>
+<li><strong>字节码生成技术（Bytecode Generation）</strong> Spark1.1.0在Catalyst模块的expressions增加了codegen模块，使用动态字节码生成技术，对匹配的表达式采用特定的代码动态编译。另外对SQL表达式都作了CG优化， CG优化的实现主要还是依靠Scala2.10的运行时放射机制（runtime reflection）；</li>
+<li><strong>Scala代码优化</strong> SparkSQL在使用Scala编写代码的时候，尽量避免低效的、容易GC的代码；尽管增加了编写代码的难度，但对于用户来说接口统一。</li>
+</ol>
+<h2 id="BlinkDB"><a href="#BlinkDB" class="headerlink" title="BlinkDB"></a>BlinkDB</h2><p>&emsp;&emsp;<strong>BlinkDB</strong> 是一个用于在海量数据上运行<strong>交互式 SQL 查询</strong>的大规模并行查询引擎，它允许用户通过<strong>权衡数据精度</strong>来提升查询响应时间，其数据的精度被控制在允许的误差范围内。为了达到这个目标，BlinkDB 使用两个核心思想:</p>
+<ul>
+<li><p>一个<strong>自适应优化框架</strong>，从原始数据随着时间的推移建立并维护一组多维样本；</p>
+</li>
+<li><p>一个<strong>动态样本选择策略</strong>，选择一个适当大小的示例基于查询的准确性和（或）响应时间需求。</p>
+</li>
+</ul>
+<p>&emsp;&emsp;和传统关系型数据库不同，BlinkDB是一个很有意思的交互式查询系统，就像一个跷跷板，用户需要在查询精度和查询时间上做一权衡；如果用户想更快地获取查询结果，那么将牺牲查询结果的精度；同样的，用户如果想获取更高精度的查询结果，就需要牺牲查询响应时间。用户可以在查询的时候定义一个失误边界。</p>
+<h2 id="MLBase-MLlib"><a href="#MLBase-MLlib" class="headerlink" title="MLBase/MLlib"></a>MLBase/MLlib</h2><p>&emsp;&emsp;<strong>MLBase</strong>是Spark生态圈的一部分专注于机器学习，让机器学习的门槛更低，让一些可能并不了解机器学习的用户也能方便地使用MLbase。MLBase分为四部分：MLlib、MLI、ML Optimizer和MLRuntime。</p>
+<ul>
+<li><p><strong>ML Optimizer</strong>会选择它认为最适合的已经在内部实现好了的机器学习算法和相关参数，来处理用户输入的数据，并返回模型或别的帮助分析的结果；</p>
+</li>
+<li><p><strong>MLI</strong> 是一个进行特征抽取和高级ML编程抽象的算法实现的API或平台；</p>
+</li>
+<li><p><strong>MLlib</strong>是Spark实现一些常见的机器学习算法和实用程序，包括分类、回归、聚类、协同过滤、降维以及底层优化，该算法可以进行可扩充； </p>
+</li>
+<li><strong>MLRuntime</strong> 基于Spark计算框架，将Spark的分布式计算应用到机器学习领域。</li>
+</ul>
+<h2 id="GraphX"><a href="#GraphX" class="headerlink" title="GraphX"></a>GraphX</h2><p>&emsp;&emsp;<strong>GraphX</strong>是Spark中用于<strong>图</strong>(e.g., Web-Graphs and Social Networks)和<strong>图并行计算</strong>(e.g., PageRank and Collaborative Filtering)的API,可以认为是GraphLab(C++)和Pregel(C++)在Spark(Scala)上的重写及优化，跟其他分布式图计算框架相比，GraphX最大的贡献是，在Spark之上提供<strong>一栈式数据解决方案</strong>，可以方便且高效地完成图计算的一整套流水作业。GraphX最先是伯克利AMPLAB的一个分布式图计算框架项目，后来整合到Spark中成为一个核心组件。</p>
+<h2 id="SparkR"><a href="#SparkR" class="headerlink" title="SparkR"></a>SparkR</h2><p>&emsp;&emsp;<strong>SparkR</strong>是AMPLab发布的一个R开发包，使得R摆脱单机运行的命运，可以作为Spark的job运行在集群上，极大得扩展了R的数据处理能力。</p>
+<p>&emsp;&emsp;<strong>SparkR</strong>的几个特性：</p>
+<ol>
+<li>提供了Spark中弹性分布式数据集（RDD）的API，用户可以在集群上通过R shell交互性的运行Spark job。</li>
+<li>支持<strong>序化闭包</strong>功能，可以将用户定义函数中所引用到的变量自动序化发送到集群中其他的机器上。</li>
+<li>SparkR还可以很容易地调用R开发包，只需要在集群上执行操作前用includePackage读取R开发包就可以了，当然集群上要安装R开发包。</li>
+</ol>
+<h2 id="Tachyon"><a href="#Tachyon" class="headerlink" title="Tachyon"></a>Tachyon</h2><p>&emsp;&emsp;<strong>Tachyon</strong>是一个<strong>高容错的分布式文件系统</strong>，允许文件以内存的速度在集群框架中进行可靠的共享，就像Spark和 MapReduce那样。通过利用信息继承，内存侵入，Tachyon获得了高性能。Tachyon工作集文件缓存在<strong>内存</strong>中，并且让不同的 Jobs/Queries以及框架都能内存的速度来访问缓存文件”。因此，Tachyon可以减少那些需要经常使用的数据集通过访问磁盘来获得的次数。Tachyon兼容Hadoop，现有的Spark和MR程序不需要任何修改而运行。</p>
+<h2 id="生态圈应用"><a href="#生态圈应用" class="headerlink" title="生态圈应用"></a>生态圈应用</h2><p>&emsp;&emsp;Spark生态圈以Spark为核心、以RDD为基础，打造了一个基于内存计算的大数据平台，为人们提供了all-in-one的数据处理方案。人们可以根据不同的场景使用spark生态圈的多个产品来解决应用，而不是使用多个隔离的系统来满足场景需求。下面是几个典型的例子：</p>
+<ul>
+<li><p>场景1：历史数据和实时数据分析查询</p>
+<p>通过Spark进行历史数据分析、Spark Streaming进行实时数据分析，最后通过Spark SQL或BlinkDB给用户交互查询。</p>
+</li>
+<li><p>场景2：欺诈检测、异常行为的发现</p>
+<p>通过Spark进行历史数据分析，用MLlib建立数据模型，对Spark Streaming实时数据进行评估，检测并发现异常数据。</p>
+</li>
+<li><p>场景3：社交网络洞察</p>
+<p>通过Spark和GraphX计算社交关系，给出建议。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spark/" rel="tag"><i class="fa fa-tag"></i>
+
+ Spark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/25/Spark介绍/" rel="next" title="Spark介绍">
+                <i class="fa fa-chevron-left"></i> Spark介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/26/Spark编程模型/" rel="prev" title="Spark编程模型">
+                Spark编程模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/love.jpg" alt="Ocean">
+            
+              <p class="site-author-name" itemprop="name">Ocean</p>
+              <div class="site-description motion-element" itemprop="description">大数据技术博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/ocean233" title="GitHub &rarr; https://github.com/ocean233" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:1245813009@qq.com" title="邮箱 &rarr; mailto:1245813009@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope-o"></i>邮箱</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生态系统"><span class="nav-number">1.</span> <span class="nav-text">生态系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Core"><span class="nav-number">2.</span> <span class="nav-text">Spark Core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SparkStreaming"><span class="nav-number">3.</span> <span class="nav-text">SparkStreaming</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">3.1.</span> <span class="nav-text">架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#计算流程"><span class="nav-number">3.1.1.</span> <span class="nav-text">计算流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容错性"><span class="nav-number">3.1.2.</span> <span class="nav-text">容错性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实时性"><span class="nav-number">3.1.3.</span> <span class="nav-text">实时性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展性与吞吐量"><span class="nav-number">3.1.4.</span> <span class="nav-text">扩展性与吞吐量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-SQL"><span class="nav-number">4.</span> <span class="nav-text">Spark SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前世今生"><span class="nav-number">4.1.</span> <span class="nav-text">前世今生</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">4.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能优化"><span class="nav-number">4.3.</span> <span class="nav-text">性能优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BlinkDB"><span class="nav-number">5.</span> <span class="nav-text">BlinkDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MLBase-MLlib"><span class="nav-number">6.</span> <span class="nav-text">MLBase/MLlib</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GraphX"><span class="nav-number">7.</span> <span class="nav-text">GraphX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SparkR"><span class="nav-number">8.</span> <span class="nav-text">SparkR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tachyon"><span class="nav-number">9.</span> <span class="nav-text">Tachyon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生态圈应用"><span class="nav-number">10.</span> <span class="nav-text">生态圈应用</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ocean</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+<section class="footer-time">
+    <span class="footer__copyright">
+    <div>
+    <span id="span_dt_dt"> </span>
+    <script language="javascript">
+      function show_date_time(){
+        window.setTimeout("show_date_time()", 1000);
+        BirthDay=new Date("4/1/2019 00:00:00");//这个日期是可以修改的
+        today=new Date();
+        timeold=(today.getTime()-BirthDay.getTime());//其实仅仅改了这里
+        sectimeold=timeold/1000
+        secondsold=Math.floor(sectimeold);
+        msPerDay=24*60*60*1000
+        e_daysold=timeold/msPerDay
+        daysold=Math.floor(e_daysold);
+        e_hrsold=(e_daysold-daysold)*24;
+        hrsold=Math.floor(e_hrsold);
+        e_minsold=(e_hrsold-hrsold)*60;
+        minsold=Math.floor((e_hrsold-hrsold)*60);
+        seconds=Math.floor((e_minsold-minsold)*60);
+        span_dt_dt.innerHTML="Ocean's blog已经运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+      }
+      show_date_time();
+    </script>
+    </div>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+</span></section>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

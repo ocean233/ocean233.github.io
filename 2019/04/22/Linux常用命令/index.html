@@ -146,18 +146,18 @@
 
 
 
-  <meta name="description" content="写一篇博客记录常用的Linux命令!">
+  <meta name="description" content="&amp;emsp;&amp;emsp;最近都在和Linux打交道，我觉得Linux相比windows比较麻烦的就是很多东西都要用命令来控制，当然，这也是很多人喜欢Linux的原因，比较短小但却功能强大。">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常用命令">
 <meta property="og:url" content="http://yoursite.com/2019/04/22/Linux常用命令/index.html">
 <meta property="og:site_name" content="Ocean&#39;s blog">
-<meta property="og:description" content="写一篇博客记录常用的Linux命令!">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;最近都在和Linux打交道，我觉得Linux相比windows比较麻烦的就是很多东西都要用命令来控制，当然，这也是很多人喜欢Linux的原因，比较短小但却功能强大。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-25T09:45:42.076Z">
+<meta property="og:updated_time" content="2019-04-26T03:32:06.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令">
-<meta name="twitter:description" content="写一篇博客记录常用的Linux命令!">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;最近都在和Linux打交道，我觉得Linux相比windows比较麻烦的就是很多东西都要用命令来控制，当然，这也是很多人喜欢Linux的原因，比较短小但却功能强大。">
 
 
 
@@ -215,7 +215,6 @@
 </noscript>
 
 </head>
-
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
@@ -455,7 +454,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-25 17:45:42" itemprop="dateModified" datetime="2019-04-25T17:45:42+08:00">2019-04-25</time>
+                <time title="修改时间：2019-04-26 11:32:06" itemprop="dateModified" datetime="2019-04-26T11:32:06+08:00">2019-04-26</time>
               
             
           </span>
@@ -489,6 +488,13 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
 
           
 
@@ -507,7 +513,7 @@
       
 
       
-        <p>   写一篇博客记录常用的Linux命令!<br><a id="more"></a></p>
+        <p> &emsp;&emsp;最近都在和Linux打交道，我觉得Linux相比windows比较麻烦的就是很多东西都要用命令来控制，当然，这也是很多人喜欢Linux的原因，比较短小但却功能强大。<br><a id="more"></a></p>
 <h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir test        创建文件夹</span><br><span class="line">rm -rf /test      删除文件夹</span><br><span class="line">cd /test          切换文件夹</span><br><span class="line">pwd               查看文件夹路径</span><br><span class="line">cp -r test /root  拷贝文件夹目录</span><br><span class="line">mv test /root     移动文件夹、更改文件夹的名字</span><br><span class="line">ls ll        	  查看文件夹下文件</span><br></pre></td></tr></table></figure>
 <h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">touch test.txt    			新建文件</span><br><span class="line">cp test.txt newtest.txt 	复制文件</span><br><span class="line">rm -f test.txt    			删除文件</span><br><span class="line">cat test.txt      			查看文件内容</span><br><span class="line">more test.txt     			分屏显示文件内容  空格键显示下一页内容，B键显示上一页内容，Q键退出</span><br><span class="line">head -10 test.txt 			打印文件1-10行</span><br><span class="line">tail -10 test.txt 			打印最后10行内容</span><br><span class="line">tail -f test.txt  			实时打印文件内容</span><br><span class="line">find 路径 -name test.txt 	查找文件或目录，列出路径，可以使用正则表达式查找</span><br></pre></td></tr></table></figure>
 <h2 id="vi-vim"><a href="#vi-vim" class="headerlink" title="vi/vim"></a>vi/vim</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">命令行模式	 </span><br><span class="line">	:w保存  </span><br><span class="line">	:q退出  </span><br><span class="line">	:q!不保存强制退出  </span><br><span class="line">	:set nu显示行号 </span><br><span class="line">	:/单词查找匹配</span><br><span class="line">	:N,Md 删除N-M行数据	</span><br><span class="line">一般模式： 	  </span><br><span class="line">	yy复制当前行 </span><br><span class="line">    nyy复制下面n行 </span><br><span class="line">    p粘贴到下一行 P粘贴到上一行</span><br><span class="line">	G移动到最后一行</span><br><span class="line">	nG移动到第n行</span><br><span class="line">	n+光标下移n行 </span><br><span class="line">    n-光标上移n行 </span><br><span class="line">	H光标移动到屏幕顶行 </span><br><span class="line">    M光标移动到屏幕中间行 </span><br><span class="line">    L光标移动到屏幕最后行</span><br><span class="line">	dd删除行   </span><br><span class="line">	x删除光标后一个字符 X删除光标前一个字符 </span><br><span class="line">	u恢复前一个动作</span><br></pre></td></tr></table></figure>
@@ -547,7 +553,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i>
+
+ Linux</a>
           
         </div>
       
@@ -556,6 +564,22 @@
       
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/25/Spark介绍/" rel="prev" title="Spark介绍">
+                Spark介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -623,7 +647,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -639,8 +663,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -665,7 +687,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -769,7 +793,46 @@
 
 
 
+<section class="footer-time">
+    <span class="footer__copyright">
+    <div>
+    <span id="span_dt_dt"> </span>
+    <script language="javascript">
+      function show_date_time(){
+        window.setTimeout("show_date_time()", 1000);
+        BirthDay=new Date("4/1/2019 00:00:00");//这个日期是可以修改的
+        today=new Date();
+        timeold=(today.getTime()-BirthDay.getTime());//其实仅仅改了这里
+        sectimeold=timeold/1000
+        secondsold=Math.floor(sectimeold);
+        msPerDay=24*60*60*1000
+        e_daysold=timeold/msPerDay
+        daysold=Math.floor(e_daysold);
+        e_hrsold=(e_daysold-daysold)*24;
+        hrsold=Math.floor(e_hrsold);
+        e_minsold=(e_hrsold-hrsold)*60;
+        minsold=Math.floor((e_hrsold-hrsold)*60);
+        seconds=Math.floor((e_minsold-minsold)*60);
+        span_dt_dt.innerHTML="Ocean's blog已经运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+      }
+      show_date_time();
+    </script>
+    </div>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+</span></section>
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
 
 
 

@@ -213,7 +213,6 @@
 </noscript>
 
 </head>
-
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
@@ -394,6 +393,690 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Spark-RDD详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ocean">
+      <meta itemprop="description" content="大数据技术博客">
+      <meta itemprop="image" content="/images/love.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ocean's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/26/Spark-RDD详解/" class="post-title-link" itemprop="url">Spark RDD详解</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 17:09:03 / 修改时间：17:51:31" itemprop="dateCreated datePublished" datetime="2019-04-26T17:09:03+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>&emsp;&emsp;<strong>RDD(Resilient Distributed Dateset)，弹性分布式数据集。</strong></p>
+<p>&emsp;&emsp;RDD是Spark的最基本抽象,是对分布式内存的抽象使用，实现了以操作本地集合的方式来操作分布式数据集的抽象实现。RDD是Spark最核心的东西，它表示已被分区，不可变的并能够被并行操作的数据集合，不同的数据集格式对应不同的RDD实现。RDD必须是可序列化的。RDD可以cache到内存中，每次对RDD数据集的操作之后的结果，都可以存放到内存中，下一个操作可以直接从内存中输入，省去了MapReduce大量的磁盘IO操作。这对于迭代运算比较常见的机器学习算法, 交互式数据挖掘来说，效率提升非常大。</p>
+<p>&emsp;&emsp;RDD 最适合那种在数据集上的所有元素都执行相同操作的批处理式应用。在这种情况下， RDD 只需记录血统中每个转换就能还原丢失的数据分区，而无需记录大量的数据操作日志。所以 RDD 不适合那些需要异步、细粒度更新状态的应用 ，比如 Web 应用的存储系统，或增量式的 Web 爬虫等。对于这些应用，使用具有事务更新日志和数据检查点的数据库系统更为高效。<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/26/Spark-RDD详解/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Spark编程模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ocean">
+      <meta itemprop="description" content="大数据技术博客">
+      <meta itemprop="image" content="/images/love.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ocean's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/26/Spark编程模型/" class="post-title-link" itemprop="url">Spark编程模型</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 16:11:43 / 修改时间：17:09:44" itemprop="dateCreated datePublished" datetime="2019-04-26T16:11:43+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>&emsp;&emsp;Spark和MapReduce都是<strong>分布式计算框架</strong>，但是Spark处理数据的能力是MR的十倍以上，不仅仅是因为Spark基于<strong>内存</strong>，MR基于<strong>HDFS</strong>，还有就是Spark通过<strong>DAG有向无环图</strong>来切分任务的执行先后顺序。<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/26/Spark编程模型/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Spark生态圈/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ocean">
+      <meta itemprop="description" content="大数据技术博客">
+      <meta itemprop="image" content="/images/love.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ocean's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/26/Spark生态圈/" class="post-title-link" itemprop="url">Spark生态圈</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 11:14:44 / 修改时间：11:27:25" itemprop="dateCreated datePublished" datetime="2019-04-26T11:14:44+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="生态系统"><a href="#生态系统" class="headerlink" title="生态系统"></a>生态系统</h2><p>&emsp;&emsp;<strong>Spark生态圈</strong>也被称为<strong>BDAS</strong>（伯克利数据分析栈），力图在<strong>算法</strong>（Algorithms）、<strong>机器</strong>（Machines）、<strong>人</strong>（People）之间通过大规模集成来展现大数据应用的一个平台。该生态圈已经涉及到了机器学习、数据挖掘、数据库、信息检索、自然语言处理和语音识别等多个领域。</p>
+<p>&emsp;&emsp;Spark生态圈以<strong>Spark Core</strong>为核心，从<strong>HDFS</strong>、<strong>Amazon S3</strong>和<strong>HBase</strong>等持久层读取数据，以<strong>YARN</strong>和<strong>Standalone</strong>等作为资源管理器调度Job完成Spark应用程序的计算。这些应用程序可以来自不同的组件，如<strong>Spark Shell/Spark Submit</strong>的批处理、<strong>Spark Streaming</strong>的实时处理、<strong>Spark SQL</strong>的即席查询、<strong>BlinkDB</strong>的权衡查询、<strong>MLlib/MLbase</strong>的机器学习、<strong>GraphX</strong>的图处理和<strong>SparkR</strong>的数学计算等等。<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/26/Spark生态圈/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/25/Spark介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ocean">
+      <meta itemprop="description" content="大数据技术博客">
+      <meta itemprop="image" content="/images/love.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ocean's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/25/Spark介绍/" class="post-title-link" itemprop="url">Spark介绍</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-25 09:38:51" itemprop="dateCreated datePublished" datetime="2019-04-25T09:38:51+08:00">2019-04-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-26 11:27:34" itemprop="dateModified" datetime="2019-04-26T11:27:34+08:00">2019-04-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Spark简介"><a href="#Spark简介" class="headerlink" title="Spark简介"></a>Spark简介</h2><p>&emsp;&emsp;<strong>Spark</strong>是加州大学伯克利分校AMP实验室开发的通用内存并行计算框架。围绕着Spark推出了<strong>Spark SQL</strong>、<strong>Spark Streaming</strong>、<strong>MLLib</strong>、<strong>GraphX</strong>等组件，也就是BDAS（伯克利数据分析栈），这些组件逐渐形成大数据处理一站式解决平台。</p>
+<p>&emsp;&emsp;<strong>Spark</strong>使用<strong>Scala</strong>语言实现，Scala 提供一个称为 <strong>Actor</strong> 的并行模型，其中Actor通过它的收件箱来发送和接收非同步信息而不是共享数据，该方式被称为：<strong>Shared Nothing</strong> 模型。它具有运行速度快、易用性好、通用性强和随处运行等特点。<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/25/Spark介绍/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/Linux常用命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -456,7 +1139,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-25 17:45:42" itemprop="dateModified" datetime="2019-04-25T17:45:42+08:00">2019-04-25</time>
+                <time title="修改时间：2019-04-26 11:32:06" itemprop="dateModified" datetime="2019-04-26T11:32:06+08:00">2019-04-26</time>
               
             
           </span>
@@ -509,7 +1192,7 @@
 
       
         
-          <p>   写一篇博客记录常用的Linux命令!<br>
+          <p> &emsp;&emsp;最近都在和Linux打交道，我觉得Linux相比windows比较麻烦的就是很多东西都要用命令来控制，当然，这也是很多人喜欢Linux的原因，比较短小但却功能强大。<br>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -602,7 +1285,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -618,8 +1301,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -644,7 +1325,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -731,7 +1414,46 @@
 
 
 
+<section class="footer-time">
+    <span class="footer__copyright">
+    <div>
+    <span id="span_dt_dt"> </span>
+    <script language="javascript">
+      function show_date_time(){
+        window.setTimeout("show_date_time()", 1000);
+        BirthDay=new Date("4/1/2019 00:00:00");//这个日期是可以修改的
+        today=new Date();
+        timeold=(today.getTime()-BirthDay.getTime());//其实仅仅改了这里
+        sectimeold=timeold/1000
+        secondsold=Math.floor(sectimeold);
+        msPerDay=24*60*60*1000
+        e_daysold=timeold/msPerDay
+        daysold=Math.floor(e_daysold);
+        e_hrsold=(e_daysold-daysold)*24;
+        hrsold=Math.floor(e_hrsold);
+        e_minsold=(e_hrsold-hrsold)*60;
+        minsold=Math.floor((e_hrsold-hrsold)*60);
+        seconds=Math.floor((e_minsold-minsold)*60);
+        span_dt_dt.innerHTML="Ocean's blog已经运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+      }
+      show_date_time();
+    </script>
+    </div>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+</span></section>
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
 
 
 

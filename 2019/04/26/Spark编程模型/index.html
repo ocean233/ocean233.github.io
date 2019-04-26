@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Varela Round:300,300italic,400,400italic,700,700italic|Varela Round:300,300italic,400,400italic,700,700italic|Varela Round:300,300italic,400,400italic,700,700italic|Damion:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;Spark和MapReduce都是分布式计算框架，但是Spark处理数据的能力是MR的十倍以上，不仅仅是因为Spark基于内存，MR基于HDFS，还有就是Spark通过DAG有向无环图来切分任务的执行先后顺序。">
+<meta name="keywords" content="Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark编程模型">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/Spark编程模型/index.html">
+<meta property="og:site_name" content="Ocean&#39;s blog">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Spark和MapReduce都是分布式计算框架，但是Spark处理数据的能力是MR的十倍以上，不仅仅是因为Spark基于内存，MR基于HDFS，还有就是Spark通过DAG有向无环图来切分任务的执行先后顺序。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/04/26/5cc2b5071bfa6.png">
+<meta property="og:image" content="https://i.loli.net/2019/04/26/5cc2b6e9d3790.jpg">
+<meta property="og:updated_time" content="2019-04-26T09:09:44.219Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spark编程模型">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;Spark和MapReduce都是分布式计算框架，但是Spark处理数据的能力是MR的十倍以上，不仅仅是因为Spark基于内存，MR基于HDFS，还有就是Spark通过DAG有向无环图来切分任务的执行先后顺序。">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/26/5cc2b5071bfa6.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/26/Spark编程模型/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Spark编程模型 | Ocean's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ocean's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的目标是星辰大海</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Spark编程模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ocean">
+      <meta itemprop="description" content="大数据技术博客">
+      <meta itemprop="image" content="/images/love.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ocean's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spark编程模型
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 16:11:43 / 修改时间：17:09:44" itemprop="dateCreated datePublished" datetime="2019-04-26T16:11:43+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;Spark和MapReduce都是<strong>分布式计算框架</strong>，但是Spark处理数据的能力是MR的十倍以上，不仅仅是因为Spark基于<strong>内存</strong>，MR基于<strong>HDFS</strong>，还有就是Spark通过<strong>DAG有向无环图</strong>来切分任务的执行先后顺序。<br><a id="more"></a></p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li><strong>应用程序（Application）</strong>： 基于Spark的用户程序，包含了一个Driver Program 和集群中多个的Executor；</li>
+<li><strong>驱动程序（Driver Program）</strong>：运行Application的main()函数并且创建SparkContext，通常用SparkContext代表Driver Program；</li>
+<li><strong>执行单元（Executor）</strong>： 是为某Application运行在Worker Node上的一个进程，该进程负责运行Task，并且负责将数据存在内存或者磁盘上，每个Application都有各自独立的Executors；</li>
+<li><strong>集群管理程序（Cluster Manager）：</strong> 在集群上获取资源的外部服务(例如：Standalone、Mesos或Yarn)；</li>
+<li><strong>操作（Operation）</strong>：作用于RDD的各种操作分为Transformation和Action；</li>
+</ul>
+<h2 id="任务执行原理"><a href="#任务执行原理" class="headerlink" title="任务执行原理"></a>任务执行原理</h2><p>&emsp;&emsp;<strong>Driver</strong>和<strong>Worker</strong>是启动在节点上的进程，运行在JVM中的进程。</p>
+<ul>
+<li><strong>Driver</strong> 与集群节点之间有频繁的通信。</li>
+<li><strong>Driver</strong> 负责任务(tasks)的分发和结果的回收、任务的调度。如果 task的计算结果非常大就不要回收了，会造成 oom。</li>
+<li><strong>Worker</strong> 是 Standalone 资源调度框架里面资源管理的从节点，也是JVM 进程。</li>
+<li><strong>Master</strong> 是 Standalone 资源调度框架里面资源管理的主节点，也是JVM 进程。</li>
+</ul>
+<p><img src="https://i.loli.net/2019/04/26/5cc2b5071bfa6.png" alt></p>
+<h2 id="模型组成"><a href="#模型组成" class="headerlink" title="模型组成"></a>模型组成</h2><p>&emsp;&emsp;Spark应用程序可分为两部分：<strong>Driver部分</strong>和<strong>Executor部分</strong>。</p>
+<p><img src="https://i.loli.net/2019/04/26/5cc2b6e9d3790.jpg" alt></p>
+<ol>
+<li><p>Driver部分</p>
+<p><strong>Driver部分</strong>主要是对<strong>SparkContext</strong>进行配置、初始化以及关闭。初始化SparkContext是为了构建Spark应用程序的运行环境，在初始化SparkContext，要先导入一些Spark的类和隐式转换；在Executor部分运行完毕后，需要将SparkContext关闭。</p>
+</li>
+<li><p>Executor部分</p>
+<p><strong>Executor部分</strong>是对数据的处理。</p>
+</li>
+</ol>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="原生数据"><a href="#原生数据" class="headerlink" title="原生数据"></a>原生数据</h3><p>&emsp;&emsp;包括原生的输入数据和输出数据：</p>
+<ol>
+<li><strong>输入数据</strong>，Spark目前提供了两种:<ul>
+<li><strong>Scala集合数据集</strong>：如Array(1,2,3,4,5)，Spark使用<strong>parallelize</strong>方法转换成RDD</li>
+<li><strong>Hadoop数据集</strong>：Spark支持存储在hadoop上的文件和hadoop支持的其他文件系统，如本地文件、HBase、SequenceFile和Hadoop的输入格式。例如Spark使用<strong>textFile</strong>方法可以将本地文件或HDFS文件转换成RDD</li>
+</ul>
+</li>
+<li><strong>输出数据</strong>，Spark除了支持上述两种外，还支持scala标量：<ul>
+<li>生成Scala标量数据，如count（返回RDD中元素的个数）、reduce、fold/aggregate；返回几个标量，如take（返回前几个元素）。</li>
+<li>生成Scala集合数据集，如collect（把RDD中的所有元素倒入 Scala集合类型）、lookup（查找对应key的所有值）。</li>
+<li>生成hadoop数据集，如saveAsTextFile、saveAsSequenceFile</li>
+</ul>
+</li>
+</ol>
+<h3 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h3><p>&emsp;&emsp;RDD提供了四种算子：</p>
+<ul>
+<li><strong>输入算子</strong>：将原生数据转换成RDD，如parallelize、txtFile等。</li>
+<li><strong>转换算子</strong>：最主要的算子，是Spark生成DAG图的对象，转换算子并不立即执行，在触发行动算子后再提交给driver处理，生成DAG图 –&gt;  Stage –&gt; Task  –&gt; Worker执行。</li>
+<li><strong>缓存算子</strong>：对于要多次使用的RDD，可以缓冲加快运行速度，对重要数据可以采用多备份缓存。</li>
+<li><strong>行动算子</strong>：将运算结果RDD转换成原生数据，如count、reduce、collect、saveAsTextFile等。</li>
+</ul>
+<h3 id="共享变量"><a href="#共享变量" class="headerlink" title="共享变量"></a>共享变量</h3><p>&emsp;&emsp;在Spark运行时，一个函数传递给RDD内的patition操作时，该函数所用到的变量在每个运算节点上都复制并维护了一份，并且各个节点之间不会相互影响。但是在Spark Application中，可能需要共享一些变量，提供Task或驱动程序使用。Spark提供了两种共享变量：</p>
+<ol>
+<li><p><strong>广播变量（Broadcast Variables）</strong>：可以缓存到各个节点的共享变量，通常为只读</p>
+<ul>
+<li><p>广播变量缓存到各个节点的内存中，而不是每个 Task。</p>
+</li>
+<li><p>广播变量被创建后，能在集群中运行的任何函数调用。</p>
+</li>
+<li><p>广播变量是只读的，不能在被广播后修改。</p>
+</li>
+<li><p>对于大数据集的广播， Spark 尝试使用高效的广播算法来降低通信成本。</p>
+</li>
+<li><p>使用方法：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> broadcastVar ==sc.broadcast(<span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>累加器</strong>：只支持加法操作的变量，可以实现计数器和变量求和。用户可以调用SparkContext.accumulator(v)创建一个初始值为v的累加器，而运行在集群上的Task可以使用“+=”操作，但这些任务却不能读取；只有驱动程序才能获取累加器的值。</p>
+<ul>
+<li><p>使用方法：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> accum = sc.accumulator(<span class="number">0</span>)；</span><br><span class="line">sc.parallelize(<span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)).foreach(x =&gt; accum  + = x)；</span><br><span class="line">accum.value；</span><br><span class="line"><span class="keyword">val</span> num=sc.parallelize(<span class="number">1</span> to <span class="number">100</span>)；</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spark/" rel="tag"><i class="fa fa-tag"></i>
+
+ Spark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/26/Spark生态圈/" rel="next" title="Spark生态圈">
+                <i class="fa fa-chevron-left"></i> Spark生态圈
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/26/Spark-RDD详解/" rel="prev" title="Spark RDD详解">
+                Spark RDD详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/love.jpg" alt="Ocean">
+            
+              <p class="site-author-name" itemprop="name">Ocean</p>
+              <div class="site-description motion-element" itemprop="description">大数据技术博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/ocean233" title="GitHub &rarr; https://github.com/ocean233" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:1245813009@qq.com" title="邮箱 &rarr; mailto:1245813009@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope-o"></i>邮箱</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务执行原理"><span class="nav-number">2.</span> <span class="nav-text">任务执行原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型组成"><span class="nav-number">3.</span> <span class="nav-text">模型组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">4.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原生数据"><span class="nav-number">4.1.</span> <span class="nav-text">原生数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDD"><span class="nav-number">4.2.</span> <span class="nav-text">RDD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#共享变量"><span class="nav-number">4.3.</span> <span class="nav-text">共享变量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ocean</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+<section class="footer-time">
+    <span class="footer__copyright">
+    <div>
+    <span id="span_dt_dt"> </span>
+    <script language="javascript">
+      function show_date_time(){
+        window.setTimeout("show_date_time()", 1000);
+        BirthDay=new Date("4/1/2019 00:00:00");//这个日期是可以修改的
+        today=new Date();
+        timeold=(today.getTime()-BirthDay.getTime());//其实仅仅改了这里
+        sectimeold=timeold/1000
+        secondsold=Math.floor(sectimeold);
+        msPerDay=24*60*60*1000
+        e_daysold=timeold/msPerDay
+        daysold=Math.floor(e_daysold);
+        e_hrsold=(e_daysold-daysold)*24;
+        hrsold=Math.floor(e_hrsold);
+        e_minsold=(e_hrsold-hrsold)*60;
+        minsold=Math.floor((e_hrsold-hrsold)*60);
+        seconds=Math.floor((e_minsold-minsold)*60);
+        span_dt_dt.innerHTML="Ocean's blog已经运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+      }
+      show_date_time();
+    </script>
+    </div>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+</span></section>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
