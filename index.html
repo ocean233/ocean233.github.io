@@ -442,12 +442,24 @@
                 
               
 
-              <time title="创建时间：2019-04-26 17:09:03 / 修改时间：17:51:31" itemprop="dateCreated datePublished" datetime="2019-04-26T17:09:03+08:00">2019-04-26</time>
+              <time title="创建时间：2019-04-26 17:09:03" itemprop="dateCreated datePublished" datetime="2019-04-26T17:09:03+08:00">2019-04-26</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-28 17:35:41" itemprop="dateModified" datetime="2019-04-28T17:35:41+08:00">2019-04-28</time>
               
             
           </span>
@@ -502,7 +514,6 @@
         
           <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>&emsp;&emsp;<strong>RDD(Resilient Distributed Dateset)，弹性分布式数据集。</strong></p>
 <p>&emsp;&emsp;RDD是Spark的最基本抽象,是对分布式内存的抽象使用，实现了以操作本地集合的方式来操作分布式数据集的抽象实现。RDD是Spark最核心的东西，它表示已被分区，不可变的并能够被并行操作的数据集合，不同的数据集格式对应不同的RDD实现。RDD必须是可序列化的。RDD可以cache到内存中，每次对RDD数据集的操作之后的结果，都可以存放到内存中，下一个操作可以直接从内存中输入，省去了MapReduce大量的磁盘IO操作。这对于迭代运算比较常见的机器学习算法, 交互式数据挖掘来说，效率提升非常大。</p>
-<p>&emsp;&emsp;RDD 最适合那种在数据集上的所有元素都执行相同操作的批处理式应用。在这种情况下， RDD 只需记录血统中每个转换就能还原丢失的数据分区，而无需记录大量的数据操作日志。所以 RDD 不适合那些需要异步、细粒度更新状态的应用 ，比如 Web 应用的存储系统，或增量式的 Web 爬虫等。对于这些应用，使用具有事务更新日志和数据检查点的数据库系统更为高效。<br>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -514,7 +525,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -1660,6 +1671,8 @@
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
         
+          <span id="scrollpercent"><span>0</span>%</span>
+        
       </div>
     
 
@@ -1701,7 +1714,7 @@
     
     
   
-  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script color="88,87,86" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
 
