@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-08-09T08:58:01.672Z</updated>
+  <updated>2019-04-28T09:35:41.195Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,31 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>好文章</title>
-    <link href="http://yoursite.com/2020/08/09/%E5%A5%BD%E6%96%87%E7%AB%A0/"/>
-    <id>http://yoursite.com/2020/08/09/%E5%A5%BD%E6%96%87%E7%AB%A0/</id>
-    <published>2020-08-09T08:41:06.000Z</published>
-    <updated>2020-08-09T08:58:01.672Z</updated>
-    
-    <content type="html"><![CDATA[<p>&emsp;&emsp;好文章分享一下，<br>但是Spark处理数据的能力是MR的十倍以上，不仅仅是因为Spark基于<strong>内存</strong>，MR基于<strong>HDFS</strong>，还有就是Spark通过<strong>DAG有向无环图</strong>来切分任务的执行先后顺序。<br><a id="more"></a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&amp;emsp;&amp;emsp;好文章分享一下，&lt;br&gt;但是Spark处理数据的能力是MR的十倍以上，不仅仅是因为Spark基于&lt;strong&gt;内存&lt;/strong&gt;，MR基于&lt;strong&gt;HDFS&lt;/strong&gt;，还有就是Spark通过&lt;strong&gt;DAG有向无环图&lt;/strong&gt;来切分任务的执行先后顺序。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="博客" scheme="http://yoursite.com/categories/%E5%8D%9A%E5%AE%A2/"/>
-    
-    
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
-    
-      <category term="博客" scheme="http://yoursite.com/tags/%E5%8D%9A%E5%AE%A2/"/>
-    
-  </entry>
   
   <entry>
     <title>Spark RDD详解</title>
