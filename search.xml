@@ -4,33 +4,6 @@
   
     
     <entry>
-      <title>测试</title>
-      <link href="/2020/08/09/%E6%B5%8B%E8%AF%95/"/>
-      <url>/2020/08/09/%E6%B5%8B%E8%AF%95/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      <categories>
-          
-          <category> 博客 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> hexo </tag>
-            
-            <tag> 博客 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>好文章</title>
       <link href="/2020/08/09/%E5%A5%BD%E6%96%87%E7%AB%A0/"/>
       <url>/2020/08/09/%E5%A5%BD%E6%96%87%E7%AB%A0/</url>
@@ -135,11 +108,11 @@
     
     
     <entry>
-      <title>Spark介绍111</title>
+      <title>Spark介绍</title>
       <link href="/2019/04/25/Spark%E4%BB%8B%E7%BB%8D/"/>
       <url>/2019/04/25/Spark%E4%BB%8B%E7%BB%8D/</url>
       
-        <content type="html"><![CDATA[<h2 id="Spark简介"><a href="#Spark简介" class="headerlink" title="Spark简介"></a>Spark简介</h2><p>&emsp;&emsp;<strong>Spark111</strong>是加州大学伯克利分校AMP实验室开发的通用内存并行计算框架。围绕着Spark推出了<strong>Spark SQL</strong>、<strong>Spark Streaming</strong>、<strong>MLLib</strong>、<strong>GraphX</strong>等组件，也就是BDAS（伯克利数据分析栈），这些组件逐渐形成大数据处理一站式解决平台。</p><p>&emsp;&emsp;<strong>Spark</strong>使用<strong>Scala</strong>语言实现，Scala 提供一个称为 <strong>Actor</strong> 的并行模型，其中Actor通过它的收件箱来发送和接收非同步信息而不是共享数据，该方式被称为：<strong>Shared Nothing</strong> 模型。它具有运行速度快、易用性好、通用性强和随处运行等特点。<br><a id="more"></a></p><h2 id="Spark和MR的区别"><a href="#Spark和MR的区别" class="headerlink" title="Spark和MR的区别"></a>Spark和MR的区别</h2><ol><li><strong>Spark</strong>把中间结果放到内存中，迭代运算效率高。<strong>MR</strong>中计算结果要落地，需要保存到磁盘上，这样会影响整体的速度。</li><li><strong>Spark</strong>容错性更高，它的弹性分布式数据集<strong>RDD</strong>可以通过血统进行重建。在RDD计算市，可以通过<strong>CheckPoint</strong>实现容错。</li><li><strong>Spark</strong>更加通用，提供了<strong>Transformations</strong>和<strong>Actions</strong>两类算子，不像MR只提供了Map和Reduce两种操作。同时，在各个节点间用户可以命名、物化、控制中间结果的存储、分区等。</li></ol><h2 id="Spark适用场景"><a href="#Spark适用场景" class="headerlink" title="Spark适用场景"></a>Spark适用场景</h2><h3 id="大数据处理场景"><a href="#大数据处理场景" class="headerlink" title="大数据处理场景"></a>大数据处理场景</h3><ol><li>复杂的<strong>批量处理</strong>（Batch Data Processing），偏重点在于处理海量数据的能力，至于处理速度可忍受，通常的时间可能是在数十分钟到数小时。</li><li>基于历史数据的<strong>交互式查询</strong>（Interactive Query），通常的时间在数十秒到数十分钟之间。</li><li>基于<strong>实时数据流</strong>的数据处理（Streaming Data Processing），通常在数百毫秒到数秒之间。</li></ol><h3 id="Spark场景"><a href="#Spark场景" class="headerlink" title="Spark场景"></a>Spark场景</h3><ol><li><strong>Spark</strong>是基于内存的迭代计算框架，适用于需要多次操作特定数据集的应用场合。需要反复操作的次数越多，所需读取的数据量越大，受益越大，数据量小但是计算密集度较大的场合，受益就相对较小。</li><li>由于RDD的特性，Spark不适用那种异步细粒度更新状态的应用，例如web服务的存储或者是增量的web爬虫和索引。就是对于那种增量修改的应用模型不适合。</li><li>数据量不是特别大，但是要求<strong>实时统计分析需求</strong>。</li></ol><h2 id="Spark案例"><a href="#Spark案例" class="headerlink" title="Spark案例"></a>Spark案例</h2><ol><li><p><strong>腾讯</strong></p><p>&emsp;&emsp;广点通是最早使用Spark的应用之一。腾讯大数据精准推荐借助Spark快速迭代的优势，围绕“数据+算法+系统”这套技术方案，实现了在“数据实时采集、算法实时训练、系统实时预测”的全流程实时并行高维算法，最终成功应用于广点通pCTR投放系统上，支持每天上百亿的请求量。</p><p>&emsp;&emsp;基于日志数据的快速查询系统业务构建于Spark之上的Shark，利用其快速查询以及内存表等优势，承担了日志数据的即席查询工作。在性能方面，普遍比Hive高2-10倍，如果使用内存表的功能，性能将会比Hive快百倍。</p></li><li><p><strong>Yahoo</strong></p><p>&emsp;&emsp;Yahoo将Spark用在Audience Expansion中的应用。Audience Expansion是广告中寻找目标用户的一种方法：首先广告者提供一些观看了广告并且购买产品的样本客户，据此进行学习，寻找更多可能转化的用户，对他们定向广告。Yahoo采用的算法是logistic regression。同时由于有些SQL负载需要更高的服务质量，又加入了专门跑Shark的大内存集群，用于取代商业BI/OLAP工具，承担报表/仪表盘和交互式/即席查询，同时与桌面BI工具对接。目前在Yahoo部署的Spark集群有112台节点，9.2TB内存。</p></li><li><p><strong>淘宝</strong></p><p>&emsp;&emsp;阿里搜索和广告业务，最初使用Mahout或者自己写的MR来解决复杂的机器学习，导致效率低而且代码不易维护。淘宝技术团队使用了Spark来解决多次迭代的机器学习算法、高计算复杂度的算法等。将Spark运用于淘宝的推荐相关算法上,同时还利用Graphx解决了许多生产问题，包括以下计算场景：基于度分布的中枢节点发现、基于最大连通图的社区发现、基于三角形计数的关系衡量、基于随机游走的用户属性传播等。</p></li><li><p><strong>优酷土豆</strong></p><p>&emsp;&emsp;优酷土豆在使用Hadoop集群的突出问题主要包括：第一是商业智能BI方面，分析师提交任务之后需要等待很久才得到结果；第二就是大数据量计算，比如进行一些模拟广告投放之时，计算量非常大的同时对效率要求也比较高，最后就是机器学习和图计算的迭代运算也是需要耗费大量资源且速度很慢。</p><p>&emsp;&emsp;最终发现这些应用场景并不适合在MapReduce里面去处理。通过对比，发现Spark性能比MapReduce提升很多。首先，交互查询响应快，性能比Hadoop提高若干倍；模拟广告投放计算效率高、延迟小（同hadoop比延迟至少降低一个数量级）；机器学习、图计算等迭代计算，大大减少了网络传输、数据落地等，极大的提高的计算性能。目前Spark已经广泛使用在优酷土豆的视频推荐（图计算）、广告业务等。</p></li></ol>]]></content>
+        <content type="html"><![CDATA[<h2 id="Spark简介"><a href="#Spark简介" class="headerlink" title="Spark简介"></a>Spark简介</h2><p>&emsp;&emsp;<strong>Spark</strong>是加州大学伯克利分校AMP实验室开发的通用内存并行计算框架。围绕着Spark推出了<strong>Spark SQL</strong>、<strong>Spark Streaming</strong>、<strong>MLLib</strong>、<strong>GraphX</strong>等组件，也就是BDAS（伯克利数据分析栈），这些组件逐渐形成大数据处理一站式解决平台。</p><p>&emsp;&emsp;<strong>Spark</strong>使用<strong>Scala</strong>语言实现，Scala 提供一个称为 <strong>Actor</strong> 的并行模型，其中Actor通过它的收件箱来发送和接收非同步信息而不是共享数据，该方式被称为：<strong>Shared Nothing</strong> 模型。它具有运行速度快、易用性好、通用性强和随处运行等特点。<br><a id="more"></a></p><h2 id="Spark和MR的区别"><a href="#Spark和MR的区别" class="headerlink" title="Spark和MR的区别"></a>Spark和MR的区别</h2><ol><li><strong>Spark</strong>把中间结果放到内存中，迭代运算效率高。<strong>MR</strong>中计算结果要落地，需要保存到磁盘上，这样会影响整体的速度。</li><li><strong>Spark</strong>容错性更高，它的弹性分布式数据集<strong>RDD</strong>可以通过血统进行重建。在RDD计算市，可以通过<strong>CheckPoint</strong>实现容错。</li><li><strong>Spark</strong>更加通用，提供了<strong>Transformations</strong>和<strong>Actions</strong>两类算子，不像MR只提供了Map和Reduce两种操作。同时，在各个节点间用户可以命名、物化、控制中间结果的存储、分区等。</li></ol><h2 id="Spark适用场景"><a href="#Spark适用场景" class="headerlink" title="Spark适用场景"></a>Spark适用场景</h2><h3 id="大数据处理场景"><a href="#大数据处理场景" class="headerlink" title="大数据处理场景"></a>大数据处理场景</h3><ol><li>复杂的<strong>批量处理</strong>（Batch Data Processing），偏重点在于处理海量数据的能力，至于处理速度可忍受，通常的时间可能是在数十分钟到数小时。</li><li>基于历史数据的<strong>交互式查询</strong>（Interactive Query），通常的时间在数十秒到数十分钟之间。</li><li>基于<strong>实时数据流</strong>的数据处理（Streaming Data Processing），通常在数百毫秒到数秒之间。</li></ol><h3 id="Spark场景"><a href="#Spark场景" class="headerlink" title="Spark场景"></a>Spark场景</h3><ol><li><strong>Spark</strong>是基于内存的迭代计算框架，适用于需要多次操作特定数据集的应用场合。需要反复操作的次数越多，所需读取的数据量越大，受益越大，数据量小但是计算密集度较大的场合，受益就相对较小。</li><li>由于RDD的特性，Spark不适用那种异步细粒度更新状态的应用，例如web服务的存储或者是增量的web爬虫和索引。就是对于那种增量修改的应用模型不适合。</li><li>数据量不是特别大，但是要求<strong>实时统计分析需求</strong>。</li></ol><h2 id="Spark案例"><a href="#Spark案例" class="headerlink" title="Spark案例"></a>Spark案例</h2><ol><li><p><strong>腾讯</strong></p><p>&emsp;&emsp;广点通是最早使用Spark的应用之一。腾讯大数据精准推荐借助Spark快速迭代的优势，围绕“数据+算法+系统”这套技术方案，实现了在“数据实时采集、算法实时训练、系统实时预测”的全流程实时并行高维算法，最终成功应用于广点通pCTR投放系统上，支持每天上百亿的请求量。</p><p>&emsp;&emsp;基于日志数据的快速查询系统业务构建于Spark之上的Shark，利用其快速查询以及内存表等优势，承担了日志数据的即席查询工作。在性能方面，普遍比Hive高2-10倍，如果使用内存表的功能，性能将会比Hive快百倍。</p></li><li><p><strong>Yahoo</strong></p><p>&emsp;&emsp;Yahoo将Spark用在Audience Expansion中的应用。Audience Expansion是广告中寻找目标用户的一种方法：首先广告者提供一些观看了广告并且购买产品的样本客户，据此进行学习，寻找更多可能转化的用户，对他们定向广告。Yahoo采用的算法是logistic regression。同时由于有些SQL负载需要更高的服务质量，又加入了专门跑Shark的大内存集群，用于取代商业BI/OLAP工具，承担报表/仪表盘和交互式/即席查询，同时与桌面BI工具对接。目前在Yahoo部署的Spark集群有112台节点，9.2TB内存。</p></li><li><p><strong>淘宝</strong></p><p>&emsp;&emsp;阿里搜索和广告业务，最初使用Mahout或者自己写的MR来解决复杂的机器学习，导致效率低而且代码不易维护。淘宝技术团队使用了Spark来解决多次迭代的机器学习算法、高计算复杂度的算法等。将Spark运用于淘宝的推荐相关算法上,同时还利用Graphx解决了许多生产问题，包括以下计算场景：基于度分布的中枢节点发现、基于最大连通图的社区发现、基于三角形计数的关系衡量、基于随机游走的用户属性传播等。</p></li><li><p><strong>优酷土豆</strong></p><p>&emsp;&emsp;优酷土豆在使用Hadoop集群的突出问题主要包括：第一是商业智能BI方面，分析师提交任务之后需要等待很久才得到结果；第二就是大数据量计算，比如进行一些模拟广告投放之时，计算量非常大的同时对效率要求也比较高，最后就是机器学习和图计算的迭代运算也是需要耗费大量资源且速度很慢。</p><p>&emsp;&emsp;最终发现这些应用场景并不适合在MapReduce里面去处理。通过对比，发现Spark性能比MapReduce提升很多。首先，交互查询响应快，性能比Hadoop提高若干倍；模拟广告投放计算效率高、延迟小（同hadoop比延迟至少降低一个数量级）；机器学习、图计算等迭代计算，大大减少了网络传输、数据落地等，极大的提高的计算性能。目前Spark已经广泛使用在优酷土豆的视频推荐（图计算）、广告业务等。</p></li></ol>]]></content>
       
       
       <categories>
