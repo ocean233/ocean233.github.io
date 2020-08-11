@@ -1794,7 +1794,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffaae4;
+  background: #8c2ed5;
 }
 .feed-link,
 .chat {
@@ -3037,7 +3037,7 @@ ul.breadcrumb li+li:last-child {
 }
 @media screen and (min-width: 1200px) {
   body {
-    background-image: url("/images/background1.jpg");
+    background-image: url("/images/background2.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: 50% 50%;
@@ -3046,7 +3046,4 @@ ul.breadcrumb li+li:last-child {
   #footer a {
     coler: #eee;
   }
-}
-#tag-cloud-tags {
-  color: #000;
 }
