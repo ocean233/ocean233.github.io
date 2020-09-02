@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Varela Round:300,300italic,400,400italic,700,700italic|Varela Round:300,300italic,400,400italic,700,700italic|Varela Round:300,300italic,400,400italic,700,700italic|Damion:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？ 有使用过的，使用ZooKeeper作为dubbo的注册中心，使用ZooKeeper实现分布式锁。 ZooKeeper，它是一个开放源码的分布式协调服务，它是一个集群的管理者，它将简单易用的接口提供给用户。 可以基于Zookeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、">
+<meta name="keywords" content="Zookeeper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zookeeper使用总结">
+<meta property="og:url" content="http://yoursite.com/2020/09/02/Zookeeper使用总结/index.html">
+<meta property="og:site_name" content="Ocean&#39;s blog">
+<meta property="og:description" content="面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？ 有使用过的，使用ZooKeeper作为dubbo的注册中心，使用ZooKeeper实现分布式锁。 ZooKeeper，它是一个开放源码的分布式协调服务，它是一个集群的管理者，它将简单易用的接口提供给用户。 可以基于Zookeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://p3-tt.byteimg.com/origin/pgc-image/2770c2d5a8f04eab80d7f0c5116cac55?from=pc">
+<meta property="og:image" content="https://p3-tt.byteimg.com/origin/pgc-image/8a8a5152129848009b141729b626a1c9?from=pc">
+<meta property="og:image" content="https://p3-tt.byteimg.com/origin/pgc-image/6aee92ac8a5e41a6837076f392f23cd4?from=pc">
+<meta property="og:image" content="https://p1-tt.byteimg.com/origin/pgc-image/33fdc0e736e34d7785a0822b963b67ab?from=pc">
+<meta property="og:image" content="https://p6-tt.byteimg.com/origin/pgc-image/68de19e989124b11b40aa90bea89adbb?from=pc">
+<meta property="og:image" content="https://p6-tt.byteimg.com/origin/pgc-image/419fc446a9e74f2c85d2402d48e931b5?from=pc">
+<meta property="og:image" content="https://p6-tt.byteimg.com/origin/pgc-image/8f8d0fc897d1420ab1ec38c5fc886ecd?from=pc">
+<meta property="og:image" content="https://p3-tt.byteimg.com/origin/pgc-image/fb3dd97205814643a941e94eece1763e?from=pc">
+<meta property="og:image" content="https://p3-tt.byteimg.com/origin/pgc-image/b32a098c251f48e19f8b678ba83a26a1?from=pc">
+<meta property="og:image" content="https://p3-tt.byteimg.com/origin/pgc-image/3608918374f34d68a80d78d87d522805?from=pc">
+<meta property="og:image" content="https://p3-tt.byteimg.com/origin/pgc-image/d750b3d812954f448a7954c2e0cfe6e0?from=pc">
+<meta property="og:image" content="https://p1-tt.byteimg.com/origin/pgc-image/d56dbf13e6d0474b82daebe11e4bd5ba?from=pc">
+<meta property="og:image" content="https://p6-tt.byteimg.com/origin/pgc-image/c89f1c25c6b141be8a310e30a4e00793?from=pc">
+<meta property="og:image" content="https://p3-tt.byteimg.com/origin/pgc-image/1f3b58beb4d3412fafa9c4ee805d5432?from=pc">
+<meta property="og:image" content="https://p6-tt.byteimg.com/origin/pgc-image/8dba6d6ab65044e185a4976791237efa?from=pc">
+<meta property="og:image" content="https://p1-tt.byteimg.com/origin/pgc-image/b306b6a02f9447748604b12d443cd744?from=pc">
+<meta property="og:updated_time" content="2020-09-02T05:58:27.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zookeeper使用总结">
+<meta name="twitter:description" content="面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？ 有使用过的，使用ZooKeeper作为dubbo的注册中心，使用ZooKeeper实现分布式锁。 ZooKeeper，它是一个开放源码的分布式协调服务，它是一个集群的管理者，它将简单易用的接口提供给用户。 可以基于Zookeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、">
+<meta name="twitter:image" content="https://p3-tt.byteimg.com/origin/pgc-image/2770c2d5a8f04eab80d7f0c5116cac55?from=pc">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2020/09/02/Zookeeper使用总结/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Zookeeper使用总结 | Ocean's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Ocean's blog" type="application/atom+xml">
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ocean's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我的目标是星辰大海</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/02/Zookeeper使用总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ocean">
+      <meta itemprop="description" content="大数据技术博客">
+      <meta itemprop="image" content="/images/love.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ocean's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Zookeeper使用总结
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-02 13:40:54 / 修改时间：13:58:27" itemprop="dateCreated datePublished" datetime="2020-09-02T13:40:54+08:00">2020-09-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？"><a href="#面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？" class="headerlink" title="面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？"></a>面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？</h3><ul>
+<li>有使用过的，使用ZooKeeper作为<strong>dubbo的注册中心</strong>，使用ZooKeeper实现<strong>分布式锁</strong>。</li>
+<li>ZooKeeper，它是一个开放源码的<strong>分布式协调服务</strong>，它是一个集群的管理者，它将简单易用的接口提供给用户。</li>
+<li>可以基于Zookeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列<strong>等功能</strong>。</li>
+<li>Zookeeper的<strong>用途</strong>：命名服务、配置管理、集群管理、分布式锁、队列管理</li>
+</ul>
+<p>用途跟功能不是一个意思咩？给我一个眼神，让我自己体会</p>
+<a id="more"></a>
+<h3 id="面试官：说下什么是命名服务，什么是配置管理，又什么是集群管理吧"><a href="#面试官：说下什么是命名服务，什么是配置管理，又什么是集群管理吧" class="headerlink" title="面试官：说下什么是命名服务，什么是配置管理，又什么是集群管理吧"></a>面试官：说下什么是命名服务，什么是配置管理，又什么是集群管理吧</h3><ul>
+<li><strong>命名服务</strong>： 命名服务是指通过<strong>指定的名字</strong>来获取资源或者服务地址。Zookeeper可以创建一个<strong>全局唯一的路径</strong>，这个路径就可以作为一个名字。被命名的实体可以是<strong>集群中的机器，服务的地址，或者是远程的对象</strong>等。一些分布式服务框架（RPC、RMI）中的服务地址列表，通过使用命名服务，客户端应用能够根据特定的名字来获取资源的实体、服务地址和提供者信息等。举例来说，B服务部署在六台服务器上，存在六个完全不同的ip地址，同时B服务本身提供一个dubbo接口对外，此时有个A服务需要调用此接口，如果提供某一台服务器的ip，则存在该服务器宕机情况下接口不可用的情况，再切换ip就会影响服务的正常使用。此时，可以使用zookeeper作为注册中心，B服务的六台服务在指定znode下创建子节点，而A服务调用之前先通过指定znode的路径获取B服务的任意子节点中的ip信息，然后通过ip访问。同时zookeeper动态维护这部分节点，定时利用心跳请求检查B服务的服务器状态，一旦发现某服务器无反馈，就删除节点，防止被A服务获取调用</li>
+<li><strong>配置管理：</strong> ： 实际项目开发中，我们经常使用.properties或者xml需要配置很多信息，如数据库连接信息、fps地址端口等等。因为你的程序一般是分布式部署在不同的机器上（如果你是单机应用当我没说），如果把程序的这些配置信息<strong>保存在zk的znode节点</strong>下，当你要修改配置，即znode会发生变化时，可以通过改变zk中某个目录节点的内容，利用<strong>watcher通知给各个客户端</strong>，从而更改配置。</li>
+<li><strong>集群管理</strong> 集群管理包括集群监控和集群控制，其实就是监控集群机器状态，剔除机器和加入机器。zookeeper可以方便集群机器的管理，它可以实时监控znode节点的变化，一旦发现有机器挂了，该机器就会与zk断开连接，对用的临时目录节点会被删除，其他所有机器都收到通知。新机器加入也是类似酱紫，所有机器收到通知：有新兄弟目录加入啦。</li>
+</ul>
+<h3 id="面试官：你提到了znode节点，那你知道znode有几种类型呢？zookeeper的数据模型是怎样的呢？"><a href="#面试官：你提到了znode节点，那你知道znode有几种类型呢？zookeeper的数据模型是怎样的呢？" class="headerlink" title="面试官：你提到了znode节点，那你知道znode有几种类型呢？zookeeper的数据模型是怎样的呢？"></a>面试官：你提到了znode节点，那你知道znode有几种类型呢？zookeeper的数据模型是怎样的呢？</h3><p><strong>zookeeper的数据模型</strong></p>
+<p> &emsp;&emsp;ZooKeeper的视图数据结构，很像Unix文件系统，也是树状的，这样可以确定每个路径都是唯一的。zookeeper的节点统一叫做<strong>znode</strong>，它是可以通过<strong>路径来标识</strong>，结构图如下：</p>
+<p><img src="https://p3-tt.byteimg.com/origin/pgc-image/2770c2d5a8f04eab80d7f0c5116cac55?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p><strong>znode的4种类型</strong></p>
+<p>​ &emsp;&emsp;根据节点的生命周期，znode可以分为4种类型，分别是持久节点（PERSISTENT）、持久顺序节点（PERSISTENT_SEQUENTIAL）、临时节点（EPHEMERAL）、临时顺序节点（EPHEMERAL_SEQUENTIAL）</p>
+<ul>
+<li>持久节点（PERSISTENT） 这类节点被创建后，就会一直存在于Zk服务器上。直到手动删除。</li>
+<li>持久顺序节点（PERSISTENT_SEQUENTIAL） 它的基本特性同持久节点，不同在于增加了顺序性。父节点会维护一个自增整性数字，用于子节点的创建的先后顺序。</li>
+<li>临时节点（EPHEMERAL） 临时节点的生命周期与客户端的会话绑定，一旦客户端会话失效（非TCP连接断开），那么这个节点就会被自动清理掉。zk规定临时节点只能作为叶子节点。</li>
+<li>临时顺序节点（EPHEMERAL_SEQUENTIAL） 基本特性同临时节点，添加了顺序的特性。</li>
+</ul>
+<h3 id="面试官：你知道znode节点里面存储的是什么吗？每个节点的数据最大不能超过多少呢？"><a href="#面试官：你知道znode节点里面存储的是什么吗？每个节点的数据最大不能超过多少呢？" class="headerlink" title="面试官：你知道znode节点里面存储的是什么吗？每个节点的数据最大不能超过多少呢？"></a>面试官：你知道znode节点里面存储的是什么吗？每个节点的数据最大不能超过多少呢？</h3><p>znode节点里面存储的是什么？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataNode</span> <span class="keyword">implements</span> <span class="title">Record</span> </span>&#123;</span><br><span class="line">    <span class="keyword">byte</span> data[];                    </span><br><span class="line">    Long acl;                           </span><br><span class="line">    <span class="keyword">public</span> StatPersisted stat;       </span><br><span class="line">    <span class="keyword">private</span> Set&lt;String&gt; children = <span class="keyword">null</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​ &emsp;&emsp;哈哈，Znode包含了<strong>存储数据、访问权限、子节点引用、节点状态信息</strong>，如图：</p>
+<p><img src="https://p3-tt.byteimg.com/origin/pgc-image/8a8a5152129848009b141729b626a1c9?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<ul>
+<li><strong>data:</strong> znode存储的业务数据信息</li>
+<li><strong>ACL:</strong> 记录客户端对znode节点的访问权限，如IP等。</li>
+<li><strong>child:</strong> 当前节点的子节点引用</li>
+<li><p><strong>stat:</strong> 包含Znode节点的状态信息，比如<strong>事务id、版本号、时间戳</strong>等等。</p>
+<p>每个节点的数据最大不能超过多少呢</p>
+</li>
+</ul>
+<p>​ &emsp;&emsp;为了保证高吞吐和低延迟，以及数据的一致性，znode只适合存储非常小的数据，不能超过1M，最好都小于1K。</p>
+<h3 id="面试官：你知道znode节点上的监听机制嘛？讲下Zookeeper-watch机制吧。"><a href="#面试官：你知道znode节点上的监听机制嘛？讲下Zookeeper-watch机制吧。" class="headerlink" title="面试官：你知道znode节点上的监听机制嘛？讲下Zookeeper watch机制吧。"></a>面试官：你知道znode节点上的监听机制嘛？讲下Zookeeper watch机制吧。</h3><p><strong>Watcher监听机制</strong></p>
+<p>​ &emsp;&emsp;Zookeeper 允许客户端向服务端的某个Znode注册一个Watcher监听，当服务端的一些指定事件触发了这个Watcher，服务端会向指定客户端发送一个事件通知来实现分布式的通知功能，然后客户端根据 Watcher通知状态和事件类型做出业务上的改变。</p>
+<blockquote>
+<p>可以把Watcher理解成客户端注册在某个Znode上的触发器，当这个Znode节点发生变化时（增删改查），就会触发Znode对应的注册事件，注册的客户端就会收到异步通知，然后做出业务的改变。</p>
+</blockquote>
+<p><strong>Watcher监听机制的工作原理</strong></p>
+<p><img src="https://p3-tt.byteimg.com/origin/pgc-image/6aee92ac8a5e41a6837076f392f23cd4?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<ul>
+<li>ZooKeeper的Watcher机制主要包括客户端线程、客户端 WatcherManager、Zookeeper服务器三部分。</li>
+<li>客户端向ZooKeeper服务器注册Watcher的同时，会将Watcher对象存储在客户端的WatchManager中。</li>
+<li>当zookeeper服务器触发watcher事件后，会向客户端发送通知， 客户端线程从 WatcherManager 中取出对应的 Watcher 对象来执行回调逻辑。</li>
+</ul>
+<p><strong>Watcher特性总结</strong></p>
+<ul>
+<li><strong>一次性：</strong>一个Watch事件是一个一次性的触发器。一次性触发，客户端只会收到一次这样的信息。</li>
+<li><strong>异步的:</strong> Zookeeper服务器发送watcher的通知事件到客户端是异步的，不能期望能够监控到节点每次的变化，Zookeeper只能保证最终的一致性，而无法保证强一致性。</li>
+<li><strong>轻量级：</strong> Watcher 通知非常简单，它只是通知发生了事件，而不会传递事件对象内容。</li>
+<li><strong>客户端串行：</strong> 执行客户端 Watcher 回调的过程是一个串行同步的过程。</li>
+<li>注册 watcher用getData、exists、getChildren方法</li>
+<li>触发 watcher用create、delete、setData方法</li>
+</ul>
+<h3 id="面试官：你对Zookeeper的数据结构都有一定了解，那你讲下Zookeeper的特性吧"><a href="#面试官：你对Zookeeper的数据结构都有一定了解，那你讲下Zookeeper的特性吧" class="headerlink" title="面试官：你对Zookeeper的数据结构都有一定了解，那你讲下Zookeeper的特性吧"></a>面试官：你对Zookeeper的数据结构都有一定了解，那你讲下Zookeeper的特性吧</h3><p>Zookeeper 保证了如下分布式一致性特性：</p>
+<ul>
+<li><strong>顺序一致性</strong>：从同一客户端发起的事务请求，最终将会严格地按照顺序被应用到 ZooKeeper 中去。</li>
+<li><strong>原子性</strong>：所有事务请求的处理结果在整个集群中所有机器上的应用情况是一致的，也就是说，要么整个集群中所有的机器都成功应用了某一个事务，要么都没有应用。</li>
+<li><strong>单一视图</strong>：无论客户端连到哪一个 ZooKeeper 服务器上，其看到的服务端数据模型都是一致的。</li>
+<li><strong>可靠性：</strong> 一旦服务端成功地应用了一个事务，并完成对客户端的响应，那么该事务所引起的服务端状态变更将会被一直保留下来。</li>
+<li><strong>实时性（最终一致性）：</strong> Zookeeper 仅仅能保证在一定的时间段内，客户端最终一定能够从服务端上读取到最新的数据状态。</li>
+</ul>
+<h3 id="面试官：你刚提到顺序一致性，那zookeeper是如何保证事务的顺序一致性的呢？"><a href="#面试官：你刚提到顺序一致性，那zookeeper是如何保证事务的顺序一致性的呢？" class="headerlink" title="面试官：你刚提到顺序一致性，那zookeeper是如何保证事务的顺序一致性的呢？"></a>面试官：你刚提到顺序一致性，那zookeeper是如何保证事务的顺序一致性的呢？</h3><p>这道题可以看下这篇文章（本题答案来自该文章）：聊一聊ZooKeeper的顺序一致性</p>
+<blockquote>
+<p>需要了解事务ID，即zxid。ZooKeeper的在选举时通过比较各结点的zxid和机器ID选出新的主结点的。zxid由Leader节点生成，有新写入事件时，Leader生成新zxid并随提案一起广播，每个结点本地都保存了当前最近一次事务的zxid，zxid是递增的，所以谁的zxid越大，就表示谁的数据是最新的。</p>
+</blockquote>
+<p>ZXID的生成规则如下：</p>
+<p><img src="https://p1-tt.byteimg.com/origin/pgc-image/33fdc0e736e34d7785a0822b963b67ab?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p>ZXID有两部分组成：</p>
+<ul>
+<li>任期：完成本次选举后，直到下次选举前，由同一Leader负责协调写入；</li>
+<li>事务计数器：单调递增，每生效一次写入，计数器加一。</li>
+</ul>
+<blockquote>
+<p>ZXID的低32位是计数器，所以同一任期内，ZXID是连续的，每个结点又都保存着自身最新生效的ZXID，通过对比新提案的ZXID与自身最新ZXID是否相差“1”，来保证事务严格按照顺序生效的。</p>
+</blockquote>
+<h3 id="面试官：你提到了Leader，你知道Zookeeper的服务器有几种角色嘛？Zookeeper下Server工作状态又有几种呢？"><a href="#面试官：你提到了Leader，你知道Zookeeper的服务器有几种角色嘛？Zookeeper下Server工作状态又有几种呢？" class="headerlink" title="面试官：你提到了Leader，你知道Zookeeper的服务器有几种角色嘛？Zookeeper下Server工作状态又有几种呢？"></a>面试官：你提到了Leader，你知道Zookeeper的服务器有几种角色嘛？Zookeeper下Server工作状态又有几种呢？</h3><p>Zookeeper集群中，有Leader、Follower和Observer三种角色</p>
+<p><strong>Leader</strong></p>
+<blockquote>
+<p>Leader服务器是整个ZooKeeper集群工作机制中的核心，其主要工作：</p>
+<p>事务请求的唯一调度和处理者，保证集群事务处理的顺序性 集群内部各服务的调度者</p>
+</blockquote>
+<p><strong>Follower</strong></p>
+<blockquote>
+<p>Follower服务器是ZooKeeper集群状态的跟随者，其主要工作：</p>
+<p>处理客户端非事务请求，转发事务请求给Leader服务器 参与事务请求Proposal的投票 参与Leader选举投票</p>
+</blockquote>
+<p><strong>Observer</strong></p>
+<blockquote>
+<p>Observer是3.3.0 版本开始引入的一个服务器角色，它充当一个观察者角色——观察ZooKeeper集群的最新状态变化并将这些状态变更同步过来。其工作：</p>
+<p>处理客户端的非事务请求，转发事务请求给 Leader 服务器 不参与任何形式的投票</p>
+</blockquote>
+<p>Zookeeper下Server工作状态</p>
+<blockquote>
+<p>服务器具有四种状态，分别是 LOOKING、FOLLOWING、LEADING、OBSERVING。</p>
+<p>1.LOOKING：寻找Leader状态。当服务器处于该状态时，它会认为当前集群中没有 Leader，因此需要进入 Leader 选举状态。 </p>
+<p>2.FOLLOWING：跟随者状态。表明当前服务器角色是Follower。 </p>
+<p>3.LEADING：领导者状态。表明当前服务器角色是Leader。 </p>
+<p>4.OBSERVING：观察者状态。表明当前服务器角色是Observer。</p>
+</blockquote>
+<h3 id="面试官：你说到服务器角色是基于ZooKeeper集群的，那你画一下ZooKeeper集群部署图吧？ZooKeeper是如何保证主从节点数据一致性的呢？"><a href="#面试官：你说到服务器角色是基于ZooKeeper集群的，那你画一下ZooKeeper集群部署图吧？ZooKeeper是如何保证主从节点数据一致性的呢？" class="headerlink" title="面试官：你说到服务器角色是基于ZooKeeper集群的，那你画一下ZooKeeper集群部署图吧？ZooKeeper是如何保证主从节点数据一致性的呢？"></a>面试官：你说到服务器角色是基于ZooKeeper集群的，那你画一下ZooKeeper集群部署图吧？ZooKeeper是如何保证主从节点数据一致性的呢？</h3><p>ZooKeeper集群部署图</p>
+<p><img src="https://p6-tt.byteimg.com/origin/pgc-image/68de19e989124b11b40aa90bea89adbb?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p>ZooKeeper集群是一主多从的结构：</p>
+<ul>
+<li>如果是写入数据，先写入主服务器（主节点），再通知从服务器。</li>
+<li>如果是读取数据，既读主服务器的，也可以读从服务器的。</li>
+</ul>
+<p>ZooKeeper如何保证主从节点数据一致性</p>
+<p>&emsp;&emsp;我们知道集群是主从部署结构，要保证主从节点一致性问题，无非就是两个主要问题：</p>
+<ul>
+<li><strong>主服务器挂了，或者重启了</strong></li>
+<li><strong>主从服务器之间同步数据</strong>~</li>
+</ul>
+<p>&emsp;&emsp;Zookeeper是采用ZAB协议（Zookeeper Atomic Broadcast，Zookeeper原子广播协议）来保证主从节点数据一致性的，ZAB协议支持<strong>崩溃恢复和消息广播</strong>两种模式，很好解决了这两个问题：</p>
+<ul>
+<li>崩溃恢复：Leader挂了，进入该模式，选一个新的leader出来</li>
+<li>消息广播： 把更新的数据，从Leader同步到所有Follower</li>
+</ul>
+<blockquote>
+<p>Leader服务器挂了，所有集群中的服务器进入LOOKING状态，首先，它们会选举产生新的Leader服务器；接着，新的Leader服务器与集群中Follower服务进行数据同步，当集群中超过半数机器与该 Leader服务器完成数据同步之后，退出恢复模式进入消息广播模式。Leader 服务器开始接收客户端的事务请求生成事务Proposal进行事务请求处理。</p>
+</blockquote>
+<h3 id="面试官：Leader挂了，进入崩溃恢复，是如何选举Leader的呢？你讲一下ZooKeeper选举机制吧"><a href="#面试官：Leader挂了，进入崩溃恢复，是如何选举Leader的呢？你讲一下ZooKeeper选举机制吧" class="headerlink" title="面试官：Leader挂了，进入崩溃恢复，是如何选举Leader的呢？你讲一下ZooKeeper选举机制吧"></a>面试官：Leader挂了，进入崩溃恢复，是如何选举Leader的呢？你讲一下ZooKeeper选举机制吧</h3><p>服务器启动的Leader选举</p>
+<p><img src="https://p6-tt.byteimg.com/origin/pgc-image/419fc446a9e74f2c85d2402d48e931b5?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p>zookeeper集群初始化阶段，服务器（myid=1-5）<strong>依次</strong>启动，开始zookeeper选举Leader~</p>
+<ul>
+<li>服务器1（myid=1）启动，当前只有一台服务器，无法完成Leader选举</li>
+<li>服务器2（myid=2）启动，此时两台服务器能够相互通讯，开始进入Leader选举阶段 每个服务器发出一个投票 服务器1 和 服务器2都将自己作为Leader服务器进行投票，投票的基本元素包括：服务器的myid和ZXID，我们以（myid，ZXID）形式表示。初始阶段，服务器1和服务器2都会投给自己，即服务器1的投票为（1,0），服务器2的投票为（2,0），然后各自将这个投票发给集群中的其他所有机器。 接受来自各个服务器的投票 每个服务器都会接受来自其他服务器的投票。同时，服务器会校验投票的有效性，是否本轮投票、是否来自LOOKING状态的服务器。 处理投票 收到其他服务器的投票，会将被人的投票跟自己的投票PK，PK规则如下： 优先检查ZXID。ZXID比较大的服务器优先作为leader。 如果ZXID相同的话，就比较myid，myid比较大的服务器作为leader。 服务器1的投票是（1,0），它收到投票是（2,0），两者zxid都是0，因为收到的myid=2，大于自己的myid=1，所以它更新自己的投票为（2,0），然后重新将投票发出去。对于服务器2呢，即不再需要更新自己的投票，把上一次的投票信息发出即可。 统计投票 每次投票后，服务器会统计所有投票，判断是否有过半的机器接受到相同的投票信息。服务器2收到两票，少于3（n/2+1,n为总服务器），所以继续保持LOOKING状态</li>
+<li>服务器3（myid=3）启动，继续进入Leader选举阶段 跟前面流程一致，服务器1和2先投自己一票，因为服务器3的myid最大，所以大家把票改投给它。此时，服务器为3票（大于等于n/2+1）,所以服务器3当选为Leader。 服务器1，2更改状态为FOLLOWING，服务器3更改状态为LEADING；</li>
+<li>服务器4启动，发起一次选举。 此时服务器1，2，3已经不是LOOKING状态，不会更改选票信息。选票信息结果：服务器3为4票，服务器4为1票。服务器4并更改状态为FOLLOWING；</li>
+<li>服务器5启动，发起一次选举。 同理，服务器也是把票投给服务器3，服务器5并更改状态为FOLLOWING；</li>
+<li>投票结束，服务器3当选为Leader</li>
+</ul>
+<p>服务器运行期间的Leader选举</p>
+<p><img src="https://p6-tt.byteimg.com/origin/pgc-image/8f8d0fc897d1420ab1ec38c5fc886ecd?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p>zookeeper集群的五台服务器（myid=1-5）正在运行中，突然某个瞬间，Leader服务器3挂了，这时候便开始Leader选举~</p>
+<ul>
+<li>1.变更状态 Leader 服务器挂了之后，余下的非Observer服务器都会把自己的服务器状态更改为LOOKING，然后开始进入Leader选举流程。</li>
+<li>2.每个服务器发起投票 每个服务器都把票投给自己，因为是运行期间，所以每台服务器的ZXID可能不相同。假设服务1,2,4,5的zxid分别为333,666,999,888，则分别产生投票（1,333），（2，666），（4,999）和（5,888），然后各自将这个投票发给集群中的其他所有机器。</li>
+<li>3.接受来自各个服务器的投票</li>
+<li>4.处理投票 投票规则是跟Zookeeper集群启动期间一致的，优先检查ZXID，大的优先作为Leader，所以显然服务器zxid=999具有优先权。</li>
+<li>5.统计投票</li>
+<li>6.改变服务器状态</li>
+</ul>
+<h3 id="面试官：-你前面提到在项目中使用过Zookeeper的分布式锁，讲一下zk分布式锁的实现原理吧？"><a href="#面试官：-你前面提到在项目中使用过Zookeeper的分布式锁，讲一下zk分布式锁的实现原理吧？" class="headerlink" title="面试官： 你前面提到在项目中使用过Zookeeper的分布式锁，讲一下zk分布式锁的实现原理吧？"></a>面试官： 你前面提到在项目中使用过Zookeeper的分布式锁，讲一下zk分布式锁的实现原理吧？</h3><p>Zookeeper就是使用临时顺序节点特性实现分布式锁的。</p>
+<ul>
+<li>获取锁过程 （创建临时节点，检查序号最小）</li>
+<li>释放锁 （删除临时节点，监听通知）</li>
+</ul>
+<p>获取锁过程</p>
+<ul>
+<li>当第一个客户端请求过来时，Zookeeper客户端会创建一个持久节点/locks。如果它（Client1）想获得锁，需要在locks节点下创建一个顺序节点lock1.如图</li>
+</ul>
+<p><img src="https://p3-tt.byteimg.com/origin/pgc-image/fb3dd97205814643a941e94eece1763e?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<ul>
+<li>接着，客户端Client1会查找locks下面的所有临时顺序子节点，判断自己的节点lock1是不是排序最小的那一个，如果是，则成功获得锁。</li>
+</ul>
+<p><img src="https://p3-tt.byteimg.com/origin/pgc-image/b32a098c251f48e19f8b678ba83a26a1?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<ul>
+<li>这时候如果又来一个客户端client2前来尝试获得锁，它会在locks下再创建一个临时节点lock2</li>
+</ul>
+<p><img src="https://p3-tt.byteimg.com/origin/pgc-image/3608918374f34d68a80d78d87d522805?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<ul>
+<li>客户端client2一样也会查找locks下面的所有临时顺序子节点，判断自己的节点lock2是不是最小的，此时，发现lock1才是最小的，于是获取锁失败。获取锁失败，它是不会甘心的，client2向它排序靠前的节点lock1注册Watcher事件，用来监听lock1是否存在，也就是说client2抢锁失败进入等待状态。</li>
+</ul>
+<p><img src="https://p3-tt.byteimg.com/origin/pgc-image/d750b3d812954f448a7954c2e0cfe6e0?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<ul>
+<li>此时，如果再来一个客户端Client3来尝试获取锁，它会在locks下再创建一个临时节点lock3</li>
+</ul>
+<p><img src="https://p1-tt.byteimg.com/origin/pgc-image/d56dbf13e6d0474b82daebe11e4bd5ba?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<ul>
+<li>同样的，client3一样也会查找locks下面的所有临时顺序子节点，判断自己的节点lock3是不是最小的，发现自己不是最小的，就获取锁失败。它也是不会甘心的，它会向在它前面的节点lock2注册Watcher事件，以监听lock2节点是否存在。</li>
+</ul>
+<p><img src="https://p6-tt.byteimg.com/origin/pgc-image/c89f1c25c6b141be8a310e30a4e00793?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p><strong>释放锁</strong></p>
+<p>我们再来看看释放锁的流程，zookeeper的<strong>客户端业务完成或者故障</strong>，都会删除临时节点，释放锁。如果是任务完成，Client1会显式调用删除lock1的指令</p>
+<p><img src="https://p3-tt.byteimg.com/origin/pgc-image/1f3b58beb4d3412fafa9c4ee805d5432?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p>如果是客户端故障了，根据临时节点得特性，lock1是会自动删除的</p>
+<p><img src="https://p6-tt.byteimg.com/origin/pgc-image/8dba6d6ab65044e185a4976791237efa?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p>lock1节点被删除后，Client2可开心了，因为它一直监听着lock1。lock1节点删除，Client2立刻收到通知，也会查找locks下面的所有临时顺序子节点，发下lock2是最小，就获得锁。</p>
+<p><img src="https://p1-tt.byteimg.com/origin/pgc-image/b306b6a02f9447748604b12d443cd744?from=pc" alt="面试官的ZooKeeper的十二连问，我怎么顶得住啊"></p>
+<p>同理，Client2获得锁之后，Client3也对它虎视眈眈，啊哈哈~</p>
+<h3 id="面试官：好的，最后一道题，你说说dubbo和Zookeeper的关系吧，为什么选择Zookeeper作为注册中心？"><a href="#面试官：好的，最后一道题，你说说dubbo和Zookeeper的关系吧，为什么选择Zookeeper作为注册中心？" class="headerlink" title="面试官：好的，最后一道题，你说说dubbo和Zookeeper的关系吧，为什么选择Zookeeper作为注册中心？"></a>面试官：好的，最后一道题，你说说dubbo和Zookeeper的关系吧，为什么选择Zookeeper作为注册中心？</h3><p>dubbo的注册中心可以选Zookeeper，memcached，redis等。为什么选择Zookeeper，因为它的功能特性咯~</p>
+<ul>
+<li>命名服务，服务提供者向Zookeeper指定节点写入url，完成服务发布。</li>
+<li>负载均衡，注册中心的承载能力有限，而Zookeeper集群配合web应用很容易达到负载均衡。</li>
+<li>zk支持监听事件，特别适合发布/订阅的场景，dubbo的生产者和消费者就类似这场景。</li>
+<li>数据模型简单，数据存在内存，可谓高性能</li>
+<li>Zookeeper其他特点都可以搬出来讲一下~</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Zookeeper/" rel="tag"><i class="fa fa-tag"></i>
+
+ Zookeeper</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/30/Zookeeper使用实例——服务节点管理/" rel="next" title="Zookeeper使用实例——服务节点管理">
+                <i class="fa fa-chevron-left"></i> Zookeeper使用实例——服务节点管理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/love.jpg" alt="Ocean">
+            
+              <p class="site-author-name" itemprop="name">Ocean</p>
+              <div class="site-description motion-element" itemprop="description">大数据技术博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/ocean233" title="GitHub &rarr; https://github.com/ocean233" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:1245813009@qq.com" title="邮箱 &rarr; mailto:1245813009@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope-o"></i>邮箱</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？"><span class="nav-number">1.</span> <span class="nav-text">面试官：工作中使用过Zookeeper嘛？你知道它是什么，有什么用途呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：说下什么是命名服务，什么是配置管理，又什么是集群管理吧"><span class="nav-number">2.</span> <span class="nav-text">面试官：说下什么是命名服务，什么是配置管理，又什么是集群管理吧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：你提到了znode节点，那你知道znode有几种类型呢？zookeeper的数据模型是怎样的呢？"><span class="nav-number">3.</span> <span class="nav-text">面试官：你提到了znode节点，那你知道znode有几种类型呢？zookeeper的数据模型是怎样的呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：你知道znode节点里面存储的是什么吗？每个节点的数据最大不能超过多少呢？"><span class="nav-number">4.</span> <span class="nav-text">面试官：你知道znode节点里面存储的是什么吗？每个节点的数据最大不能超过多少呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：你知道znode节点上的监听机制嘛？讲下Zookeeper-watch机制吧。"><span class="nav-number">5.</span> <span class="nav-text">面试官：你知道znode节点上的监听机制嘛？讲下Zookeeper watch机制吧。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：你对Zookeeper的数据结构都有一定了解，那你讲下Zookeeper的特性吧"><span class="nav-number">6.</span> <span class="nav-text">面试官：你对Zookeeper的数据结构都有一定了解，那你讲下Zookeeper的特性吧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：你刚提到顺序一致性，那zookeeper是如何保证事务的顺序一致性的呢？"><span class="nav-number">7.</span> <span class="nav-text">面试官：你刚提到顺序一致性，那zookeeper是如何保证事务的顺序一致性的呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：你提到了Leader，你知道Zookeeper的服务器有几种角色嘛？Zookeeper下Server工作状态又有几种呢？"><span class="nav-number">8.</span> <span class="nav-text">面试官：你提到了Leader，你知道Zookeeper的服务器有几种角色嘛？Zookeeper下Server工作状态又有几种呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：你说到服务器角色是基于ZooKeeper集群的，那你画一下ZooKeeper集群部署图吧？ZooKeeper是如何保证主从节点数据一致性的呢？"><span class="nav-number">9.</span> <span class="nav-text">面试官：你说到服务器角色是基于ZooKeeper集群的，那你画一下ZooKeeper集群部署图吧？ZooKeeper是如何保证主从节点数据一致性的呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：Leader挂了，进入崩溃恢复，是如何选举Leader的呢？你讲一下ZooKeeper选举机制吧"><span class="nav-number">10.</span> <span class="nav-text">面试官：Leader挂了，进入崩溃恢复，是如何选举Leader的呢？你讲一下ZooKeeper选举机制吧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：-你前面提到在项目中使用过Zookeeper的分布式锁，讲一下zk分布式锁的实现原理吧？"><span class="nav-number">11.</span> <span class="nav-text">面试官： 你前面提到在项目中使用过Zookeeper的分布式锁，讲一下zk分布式锁的实现原理吧？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：好的，最后一道题，你说说dubbo和Zookeeper的关系吧，为什么选择Zookeeper作为注册中心？"><span class="nav-number">12.</span> <span class="nav-text">面试官：好的，最后一道题，你说说dubbo和Zookeeper的关系吧，为什么选择Zookeeper作为注册中心？</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ocean</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+<section class="footer-time">
+    <span class="footer__copyright">
+    <div>
+    <span id="span_dt_dt"> </span>
+    <script language="javascript">
+      function show_date_time(){
+        window.setTimeout("show_date_time()", 1000);
+        BirthDay=new Date("4/1/2019 00:00:00");//这个日期是可以修改的
+        today=new Date();
+        timeold=(today.getTime()-BirthDay.getTime());//其实仅仅改了这里
+        sectimeold=timeold/1000
+        secondsold=Math.floor(sectimeold);
+        msPerDay=24*60*60*1000
+        e_daysold=timeold/msPerDay
+        daysold=Math.floor(e_daysold);
+        e_hrsold=(e_daysold-daysold)*24;
+        hrsold=Math.floor(e_hrsold);
+        e_minsold=(e_hrsold-hrsold)*60;
+        minsold=Math.floor((e_hrsold-hrsold)*60);
+        seconds=Math.floor((e_minsold-minsold)*60);
+        span_dt_dt.innerHTML="Ocean's blog已经运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+      }
+      show_date_time();
+    </script>
+    </div>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+</span></section>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="88,87,86" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+    
+      flOptions = {};
+      
+        flOptions.iconStyle = "box";
+      
+        flOptions.boxForm = "horizontal";
+      
+        flOptions.position = "middleRight";
+      
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
